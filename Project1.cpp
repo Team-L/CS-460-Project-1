@@ -3,8 +3,19 @@
 #include <iomanip>
 #include "SetLimits.h"
 #include "SyntacticalAnalyzer.h"
-// project 1
-// David Tauraso, David Smith, Austin Lehrer
+
+/*
+File: Project1.cpp
+
+Author: David Tauraso, David Smith, Austin Lehrer
+
+Date: 2/22/17
+
+Description:
+
+This progaram is a lexical analyzer.
+
+*/
 int main (int argc, char * argv[])
 {
 	if (argc < 2)
