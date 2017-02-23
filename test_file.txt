@@ -1,0 +1,2 @@
+(car+cadrabc-(cons/if*else=and>==>abccadr
+a_symbol1.123-12.23caddr?cddddrlist?124.-..
