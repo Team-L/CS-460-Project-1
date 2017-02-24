@@ -17,7 +17,9 @@ SyntacticalAnalyzer::SyntacticalAnalyzer (char * filename)
 	{
 		// read in line
 		lex->getInput();
+		cout << "new line\n";
 		// index should be using pos
+		if(lex->getStream().eof()) t = EOF_T;
 		while(lex->getPos() < lex->getLine().size())
 
 			// get all lexemes

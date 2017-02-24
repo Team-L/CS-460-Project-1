@@ -4,23 +4,24 @@
 
 using namespace std;
 
+
 static string token_names[] = {	"EOF_T" }; 
-int table [15][49] = {
-            { 2 , 2 , 1 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 2 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 6 , 3 , -16 , -17 , -18 , 12  , 13  , -21 , -22 ,    -23  , -25 , 8 , -25 } ,
-            { 4 , 5 , 5 , 4 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -24 , -14 , 5 } ,
-            { 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -24 , -14 , -14 } ,
-            { -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , 10  , -2  } ,
-            { 5 , 5 , 5 , 4 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 11  , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , 5 } ,
-            { 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , 5 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -14 , -24 , -14 , 5 } ,
-            { -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  } ,
-            { -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , 7 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , 9 , -15 } ,
-            { -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , 9 , 9 , 9 , 9 , 9 , 9 , 9 , 9 , 9 , 9 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 } ,
-            { -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , 9 , 9 , 9 , 9 , 9 , 9 , 9 , 9 , 9 , 9 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 } ,
-            { -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , 14  , 14  , 14  , 14  , 14  , 14  , 14  , 14  , 14  , 14  , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 , -25 } ,
-            { -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 , -13 } ,
-            { -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -8  , -19 , -8    -8  , -8  , -8  , -8  , -8  , -8  , -8  } ,
-            { -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -20 , -9  , -9  , -9  , -9  , -9  , -9  , -9  , -9  } ,
-            { -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , 14  , 14  , 14  , 14  , 14  , 14  , 14  , 14  , 14  , 14  , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 , -15 } };
+
+int table [15][20] = {  { 2 , 1 , 2 , 2 , 2 , 7 , 6 , 3 , -10  , -11  , -12  , 12  , 13  , -13  , -14  , -15,    -17 , 8 , -17 , -17 } ,
+                      { 4 , 5 , 4 , 5 , 5 , 5 , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -16  , -1  , -17 , 5 } ,
+                      { 5 , 5 , 5 , 5 , 5 , 5 , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -16  , -1  , -17 , 5 } ,
+                      { -6  , -6  , -6  , -6  , -6  , 7 , -6  , -6  , -6  , -6  , -6  , -6  , -6  , -6  , -6  , -6  , -6  , 10  , -17 , -6  } ,
+                      { 5 , 5 , 4 , 11  , 5 , 5 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , 5 } ,
+                      { 5 , 5 , 5 , 5 , 5 , 5 , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -1  , -16  , -1  , -17 , 5 } ,
+                      { -7  , -7  , -7  , -7  , -7  , 7 , -7  , -7  , -7  , -7  , -7  , -7  , -7  , -7  , -7  , -7  , -7  , -7  , -17 , -7  } ,
+                      { -2  , -2  , -2  , -2  , -2  , 7 , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , 9 , -17 , -2  } ,
+                      { -17 , -17 , -17 , -17 , -17 , 9 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 } ,
+                      { -2  , -2  , -2  , -2  , -2  , 9 , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -17 , -2  } ,
+                      { -17 , -17 , -17 , -17 , -17 , 14  , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 , -17 } ,
+                      { -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -3  , -17 , -3  } ,
+                      { -5  , -5  , -5  , -5  , -5  , -5  , -5  , -5  , -5  , -5  , -9  , -5    -5  , -5  , -5  , -5  , -5  , -5  , -17 , -5  } ,
+                      { -4  , -4  , -4  , -4  , -4  , -4  , -4  , -4  , -4  , -4  , -8  , -4  , -4  , -4  , -4  , -4  , -4  , -4  , -17 , -4  } ,
+                      { -2  , -2  , -2  , -2  , -2  , 14  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -2  , -17 , -2  } };
 
 LexicalAnalyzer::LexicalAnalyzer (char * filename)
 {
@@ -46,41 +47,57 @@ int LexicalAnalyzer::index(char a)
 {
   string char_ = "";
   char_ += a;
+  // isalpha (upper and lower cases)
+  if(isalpha(a)) return 4;
+  if(char_ == "a") return 0;
+  if(char_ == "c") return 1;
+  if(char_ == "d") return 2;
+  if(char_ == "r") return 3;
+
+    // else a
+    // else c
+    // else d
+    // else r
+  // is digit
+  if(isdigit(a)) return 5;
+
+
   // using the ascii chart to convert char to index to column of table
-  if(tolower(a) >= 'a' && tolower(a) <= 'z') return a - 97;
-  if (a >= '0' && a <= '9') return 25 + (a - 48);
+  //if(tolower(a) >= 'a' && tolower(a) <= 'z') return a - 97;
+  //if (a >= '0' && a <= '9') return 25 + (a - 48);
   // if a is +  return 36
-  if(char_ == "+") return 36;
+  if(char_ == "+") return 6;
   // if a is - return 37
-  if(char_ == "-") return 37;
+  if(char_ == "-") return 7;
   // if a is / return 38
-  if(char_ == "/") return 38;
+  if(char_ == "/") return 8;
 
   // if a is * return 39
-  if(char_ == "*") return 39;
+  if(char_ == "*") return 9;
   // if a is = return 40
-  if(char_ == "=") return 40;
+  if(char_ == "=") return 10;
   // if a is < return 41
-  if(char_ == "<") return 41;
+  if(char_ == "<") return 11;
   // if a is > return 42
-  if(char_ == ">") return 42;
+  if(char_ == ">") return 12;
   // if a is ( return 43
-  if(char_ == "(") return 43;
+  if(char_ == "(") return 13;
   // if a is ) return 44
-  if(char_ == ")") return 44;
+  if(char_ == ")") return 14;
   // if a is ` reutrn 45
-  if(char_ == "`") return 45;
+  if(char_ == "'") return 15;
   // if a is ? return 46
-  if(char_ == "?") return 46;
+  if(char_ == "?") return 16;
   // if a is . return 47
-  if(char_ == ".") return 47;
+  if(char_ == ".") return 17;
   // if a is _ return 48
-  if(char_ == "_") return 48;
+  if(char_ == "_") return 19;
 
+  // anything else = 18
   else
     {
-      cout << "char " << char_;
-      return -1;
+      //cout << char_;
+      return 18;
     }
 
 }
@@ -98,13 +115,13 @@ token_type LexicalAnalyzer::GetToken ()
     //cout << pos;
     //cout << a << endl;
     int j = index(a);
-    cout << " ( " <<  state << ", ( " << a << " -> " << j << " ) ) "  << table[state][j] << endl;
+    //cout << " ( " <<  state << ", ( " << a << " -> " << j << " ) ) "  << table[state][j] << endl;
     //cout << table[state][j];
     if(table[state][j] < 0)
     {
 
       int state_found = table[state][j] * -1;
-      //cout << "state found = "<< state_found << " " <<  end_LISTOP_T << endl;
+      //cout << "state found = "<< state_found << " " <<  -3 << endl;
       // only works if lexeme is not the last lexeme in string
       pos = detectEndOfLexeme(state_found, pos, lexeme, a);
       lexeme = "";
@@ -125,7 +142,7 @@ token_type LexicalAnalyzer::GetToken ()
       // lexeme is last in string
       if(pos == line.length() - 1)
       {
-          cout << lexeme << endl;
+          cout << "lexeme " << lexeme << endl;
         //  token = EOF_T;
           setEOF();
       }
@@ -148,135 +165,18 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
 {
   switch(state_found)
   {
+    //enum end_states = {end_IDKEY_T = 1 ,end_NUMLIT_T, end_LISTOP_T, end_LT_T, end_GT_T, end_MINUS_T, end_PLUS_T, LTE_T, GTE_T, DIV_T, MULT_T, EQUALTO_T, LPAREN_T, RPAREN_T, QUOTE_T, IDKEY_T, error};
     // 1
-    case end_PLUS_T:
+    case end_IDKEY_T:
       // collect lexeme
       cout  << "lexeme "<< lexeme << endl;
       token = NUM_TOKENS;
       setEOF();
       i--;
+
       return i;
+    
     // 2
-    case end_MINUS_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 3
-    case end_DIV_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 4
-    case end_MULT_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 5
-    case end_EQUALTO_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 6
-    case end_GTE_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 7
-    case end_LTE_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 8
-    case end_GT_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 9
-    case end_LT_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 10
-    case end_LPAREN_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-    // 11
-    case end_RPAREN_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-
-    // 12
-    case end_QUOTE_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-
-    // 13
-    case end_LISTOP_T:
-      // collect lexeme
-      cout << "lexemew " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-      return i;
-
-    // 14
-    case end_IDKEY_T:
-      // collect lexeme
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-      i--;
-
-      return i;
-
-    // 15
     case end_NUMLIT_T:
       // collect lexeme
       cout << "lexeme " << lexeme << endl;
@@ -285,9 +185,61 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       i--;
 
       return i;
+    
+    // 3
+    case end_LISTOP_T:
+      // collect lexeme
+      cout << "lexeme " << lexeme << endl;
+      token = NUM_TOKENS;
+      setEOF();
+      i--;
+
+      return i;
+      
+    // 4
+    case end_LT_T:
+      // collect lexeme
+      cout << "lexeme " << lexeme << endl;
+      token = NUM_TOKENS;
+      setEOF();
+      i--;
+
+      return i;
+    // 5
+    case end_GT_T:
+      // collect lexeme
+      cout << "lexeme " << lexeme << endl;
+      token = NUM_TOKENS;
+      setEOF();
+      i--;
+
+      return i;
+    // 6
+    case end_MINUS_T:
+      // collect lexeme
+      cout << "lexeme " << lexeme << endl;
+      token = NUM_TOKENS;
+      setEOF();
+      i--;
+
+      return i;
+    // 7
+    case end_PLUS_T:
+      // collect lexeme
+      cout << "lexeme " << lexeme << endl;
+      token = NUM_TOKENS;
+      setEOF();
+      i--;
+
+      return i;
+    
+
+      // string match lexeme against all keywords and predicates to find the right token
+      // if match fails then token is -16
+      // collect lexeme
 
     // 16 
-    case DIV_T:
+    case LTE_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
@@ -298,28 +250,6 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       return i;
 
     // 17
-    case MULT_T:
-      // add a to lexeme
-      lexeme += a;
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-
-      // return lexeme
-      return i;
-
-    // 18
-    case EQUALTO_T:
-      // add a to lexeme
-      lexeme += a;
-      cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
-      setEOF();
-
-      // return lexeme
-      return i;
-
-    // 19
     case GTE_T:
       // add a to lexeme
       lexeme += a;
@@ -330,8 +260,30 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       // return lexeme
       return i;
 
+    // 18
+    case DIV_T:
+      // add a to lexeme
+      lexeme += a;
+      cout << "lexeme " << lexeme << endl;
+      token = NUM_TOKENS;
+      setEOF();
+
+      // return lexeme
+      return i;
+
+    // 19
+    case MULT_T:
+      // add a to lexeme
+      lexeme += a;
+      cout << "lexeme " << lexeme << endl;
+      token = NUM_TOKENS;
+      setEOF();
+
+      // return lexeme
+      return i;
+
     // 20
-    case LTE_T:
+    case EQUALTO_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
@@ -385,15 +337,53 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       // return lexeme
       return i;
 
+    // can't tell the difference between a valid ending char for the state and an actual error
     // 25
     case error:
 
-      lexeme += a;
-      // print error
-      cout << "error " << lexeme << endl;
-      token = NONE;
-      setEOF();
-      //i--;
+      // cases 1 and 2 must be separate
+      // have each casse return separately
+      // a space should not be an error
+      if(a == ' ')
+      {
+        //cout << "|" << a << "| is not an error" << endl;
+        // empty lexemes are being recognized
+        if(lexeme.size() > 0) cout << "lexeme " << lexeme << endl;
+
+        setEOF();
+        //i++;
+        return i;
+      }
+      // if lexeme is empty
+      if(lexeme.size() == 0)
+      {
+              cout << "error " << a << endl;
+              token = NONE;
+              setEOF();
+      }
+        // actual error
+      // if lexeme ends in ? and idkey case has been ignored
+      else if(a == '?')
+      {
+              cout << "error " << a << endl;
+              token = NONE;
+              setEOF();
+        // error
+      }
+      else
+      {
+        // end state
+        // collect and leave
+        // i--
+        cout << "lexeme " << lexeme << endl;
+
+        lexeme += a;
+        token = NONE;
+        setEOF();
+        // print -17
+
+        i--;
+      }
       return i;
 
   }
@@ -421,12 +411,13 @@ string LexicalAnalyzer::GetLexeme () const
 
 void LexicalAnalyzer::ReportError (const string & msg)
 {
-  // This function will be called to write an error message to a file
+  // This function will be called to write an -17 message to a file
 }
 void LexicalAnalyzer::getInput()
 {
 
-    input >> line;
+    // part of creation of infinite loop
+    getline(input, line);
 
     pos = 0;
     state = 0;
