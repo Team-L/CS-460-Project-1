@@ -48,11 +48,12 @@ int LexicalAnalyzer::index(char a)
   string char_ = "";
   char_ += a;
   // isalpha (upper and lower cases)
-  if(isalpha(a)) return 4;
   if(char_ == "a") return 0;
   if(char_ == "c") return 1;
   if(char_ == "d") return 2;
   if(char_ == "r") return 3;
+  if(isalpha(a)) return 4;
+
 
     // else a
     // else c
@@ -194,8 +195,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       i--;
 
-      return i;
-      
+      return i;      
     // 4
     case end_LT_T:
       // collect lexeme
