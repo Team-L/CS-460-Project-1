@@ -27,8 +27,7 @@ class LexicalAnalyzer
 	ifstream& getStream();
 	int getPos();
     void setEOF();
-    string idenCheck();
-//this is a test    
+    string idenCheck();    
 
     private:
     //add table[][];
