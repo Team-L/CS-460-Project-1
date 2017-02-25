@@ -47,12 +47,15 @@ int LexicalAnalyzer::index(char a)
 {
   string char_ = "";
   char_ += a;
-  // isalpha (upper and lower cases)
-  if(isalpha(a)) return 4;
+
   if(char_ == "a") return 0;
   if(char_ == "c") return 1;
   if(char_ == "d") return 2;
   if(char_ == "r") return 3;
+
+  // isalpha (upper and lower cases)  
+  if(isalpha(a)) return 4;
+
 
     // else a
     // else c
@@ -152,7 +155,7 @@ token_type LexicalAnalyzer::GetToken ()
       //cout << state;
     }
   pos++;
-//cout << token << endl;
+  //cout << token << endl;
 
   // return status of token
   // NONE = -1, EOF_T, NUM_TOKENS
@@ -194,8 +197,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       i--;
 
-      return i;
-      
+      return i;      
     // 4
     case end_LT_T:
       // collect lexeme
@@ -396,9 +398,57 @@ string LexicalAnalyzer::GetTokenName (token_type t) const
   // The GetTokenName function returns a string containing the name of the
   // token passed to it. 
 
+  //end_IDKEY_T = 1 ,end_NUMLIT_T, end_LISTOP_T, end_LT_T, end_GT_T, end_MINUS_T, end_PLUS_T, LTE_T, GTE_T,
+  // DIV_T, MULT_T, EQUALTO_T, LPAREN_T, RPAREN_T, QUOTE_T, IDKEY_T, error
+/* once the enum is in the proper places and all that. 
+switch(t){
+  case IDKEY:
+       return "IDKEY_T";
+  case NUMLIT:
+       return "NUMLIT_T";
+  case LISTOP:
+       return "LISTOP_T";
+  case LT:
+       return "LT_T";
+  case LTE:
+       return "LTE_T";
+  case GT:
+       return "GT_T";
+  case GTE:
+       return "GTE_T";
+  case MINUS:
+       return "MINUS_T";
+  case PLUS:
+       return "PLUS_T";
+  case DIV:
+       return "DIV_T";
+  case MULT:
+       return "MULT_T";
+  case EQUALTO:
+       return "EQUALTO_T";
+  case LPAREN:
+       return "LPAREN_T";
+  case RPAREN:
+       return "RPAREN_T";
+  case QUOTE:
+       return "QUOTE_T";
+  case ERROR:
+       return "ERROR";
+  }
+  */
+
   // non if lexeme is invalid
   // eof_t if hit end of file and EOF_T token was found
   // numtokens if a valid lexeme was found
+  //test enum output NONE = -1, EOF_T, NUM_TOKENS
+  switch(t){
+            case NONE:
+                 return ""
+            case EOF_T:
+                 return "EOF_T";
+            case NUM_TOKENS:
+                 return "NUMTOKEN_T";
+  }
   return "";
 }
 
