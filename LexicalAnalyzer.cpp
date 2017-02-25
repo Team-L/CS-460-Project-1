@@ -396,14 +396,28 @@ string LexicalAnalyzer::GetTokenName (token_type t) const
 {
   
   // The GetTokenName function returns a string containing the name of the
-  // token passed to it. 
+  // token passed to it.
+  
 
+  // non if lexeme is invalid
+  // eof_t if hit end of file and EOF_T token was found
+  // numtokens if a valid lexeme was found
+ 
+  //test enum output NONE = -1, EOF_T, NUM_TOKENS
+switch(t){
+  case NONE:
+       return ""
+  case EOF_T:
+       return "EOF_T";
+  case NUM_TOKENS:
+       return "NUMTOKEN_T";
+  }
   //end_IDKEY_T = 1 ,end_NUMLIT_T, end_LISTOP_T, end_LT_T, end_GT_T, end_MINUS_T, end_PLUS_T, LTE_T, GTE_T,
   // DIV_T, MULT_T, EQUALTO_T, LPAREN_T, RPAREN_T, QUOTE_T, IDKEY_T, error
-/* once the enum is in the proper places and all that. 
+// once the enum is in the proper places and all that. 
 switch(t){
   case IDKEY:
-       return "IDKEY_T";
+       return idenCheck();
   case NUMLIT:
        return "NUMLIT_T";
   case LISTOP:
@@ -435,20 +449,8 @@ switch(t){
   case ERROR:
        return "ERROR";
   }
-  */
+  
 
-  // non if lexeme is invalid
-  // eof_t if hit end of file and EOF_T token was found
-  // numtokens if a valid lexeme was found
-  //test enum output NONE = -1, EOF_T, NUM_TOKENS
-  switch(t){
-            case NONE:
-                 return ""
-            case EOF_T:
-                 return "EOF_T";
-            case NUM_TOKENS:
-                 return "NUMTOKEN_T";
-  }
   return "";
 }
 
@@ -494,4 +496,45 @@ void LexicalAnalyzer::setEOF()
     // if input got last line
     if(input.eof())
       token = EOF_T;
+}
+string LexicalAnalyzer::GetLexeme(){
+       return lexeme;       
+}
+string LexicalAnalyzer::idenCheck(){
+       if(lexeme.at(lexeme.length()-1) == '?'){
+            if(lexeme.compare("number?"))
+                    return "NUMBERP_T";
+            if(lexeme.compare("symbol?"))
+                    return "SYMBOLP_T";
+            if(lexeme.compare("list?"))
+                    return "LISTP_T";
+            if(lexeme.compare("zero?"))
+                    return "ZEROP_T";
+            if(lexeme.compare("null?"))
+                    return "NULLP_T";
+            if(lexeme.compare("char?"))
+                    return "CHARP_T";
+            if(lexeme.compare("string?"))
+                    return "STRINGP_T";
+       }
+       if(lexeme.length() ==2){
+            if(lexeme.compare("if"))
+                    return "IF_T";
+            if(lexeme.compare("or"))
+                    return "OR_T";
+       }
+       if(lexeme.length() == 3){
+            if(lexeme.compare("cons"))
+                    return "CONS_T";
+            if(lexeme.compare("and"))
+                    return "AND_T";
+            if(lexeme.compare("not"))
+                    return "NOT_T";
+       }
+       if(lexeme.compare("while")
+            return "WHILE_T";
+       if(lexeme.compare("define")
+            return "DEFINE_T";
+       
+       return "IDENT_T";
 }
