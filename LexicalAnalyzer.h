@@ -28,6 +28,7 @@ class LexicalAnalyzer
 	int getPos();
     void setEOF();
     string idenCheck();
+//this is a test    
 
     private:
     //add table[][];
