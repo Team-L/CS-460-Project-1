@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -25,14 +26,16 @@ class LexicalAnalyzer
 	string getLine();
 	ifstream& getStream();
 	int getPos();
-	void setEOF();
+    void setEOF();
+    string idenCheck();
+//this is a test    
 
     private:
-	//add table[][];
+    //add table[][];
 
-	ifstream input;
-	ofstream listing;
-	ofstream debug;
+    ifstream input;
+    ofstream listing;
+    ofstream debug;
 	token_type token;
 	string line;
 	int linenum;
