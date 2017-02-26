@@ -30,8 +30,10 @@ LexicalAnalyzer::LexicalAnalyzer (char * filename)
   if(!input)
       cout << filename << " does not exist.\n";
   //input >> line;
-  // set ofstream listing to listing file
+    // set  ofstream listing to listing file
+  listing = ofstream myfile("Project1L.lst");
   // set ofstream debug to debug file
+  debug = ofstream myfile("Project1L.dbg");
   pos = 0;
   state = 0;
   token = NUM_TOKENS;
