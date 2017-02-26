@@ -29,12 +29,9 @@ LexicalAnalyzer::LexicalAnalyzer (char * filename)
   input.open(filename);
   if(!input)
       cout << filename << " does not exist.\n";
-  
-  // set  ofstream listing to listing file
-  listing = ofstream myfile("Project1L.lst");
+  //input >> line;
+  // set ofstream listing to listing file
   // set ofstream debug to debug file
-  debug = ofstream myfile("Project1L.dbg");
-  
   pos = 0;
   state = 0;
   token = NUM_TOKENS;
@@ -59,9 +56,15 @@ int LexicalAnalyzer::index(char a)
   // isalpha (upper and lower cases)  
   if(isalpha(a)) return 4;
 
+
+    // else a
+    // else c
+    // else d
+    // else r
   // is digit
   if(isdigit(a)) return 5;
-  
+
+
   // using the ascii chart to convert char to index to column of table
   //if(tolower(a) >= 'a' && tolower(a) <= 'z') return a - 97;
   //if (a >= '0' && a <= '9') return 25 + (a - 48);
@@ -101,7 +104,7 @@ int LexicalAnalyzer::index(char a)
     }
 
 }
-
+//
 token_type LexicalAnalyzer::GetToken ()
 {
 
@@ -111,13 +114,13 @@ token_type LexicalAnalyzer::GetToken ()
 
   // creates 1 lexeme
   //cout << "line[pos] pos : " << pos <<endl;
-  a = line[pos];
-  //cout << pos;
-  //cout << a << endl;
-  int j = index(a);
-  //cout << " ( " <<  state << ", ( " << a << " -> " << j << " ) ) "  << table[state][j] << endl;
-  //cout << table[state][j];
-  if(table[state][j] < 0)
+    a = line[pos];
+    //cout << pos;
+    //cout << a << endl;
+    int j = index(a);
+    //cout << " ( " <<  state << ", ( " << a << " -> " << j << " ) ) "  << table[state][j] << endl;
+    //cout << table[state][j];
+    if(table[state][j] < 0)
     {
 
       int state_found = table[state][j] * -1;
@@ -128,27 +131,32 @@ token_type LexicalAnalyzer::GetToken ()
       state = 0;
       
     }
-  else
+    else
     {
-      lexeme += a;
-      //cout << "long lexeme " << lexeme << endl;
-      //cout << "pos " << pos << endl;
+     lexeme += a;
+     //cout << "long lexeme " << lexeme << endl;
+     //cout << "pos " << pos << endl;
       // if we are on last letter
 
-      // collect lexeme
+        // collect lexeme
       // assume the tables will be changed
       // some tokens have to be identified here(some tokens are a match for an infinite number of lexemes)
       //cout << lexeme << endl;
       // lexeme is last in string
       if(pos == line.length() - 1)
-	{
-          cout << lexeme << endl;
-	 setEOF(); //token = EOF_T;
-	}
+      {
+          cout << "lexeme " << lexeme << endl;
+        //  token = EOF_T;
+          setEOF();
+      }
       state = table[state][j];
+      //cout << "state " << state << endl;
+      // it is stuck on the c
+      //cout << state;
     }
   pos++;
-  
+  //cout << token << endl;
+
   // return status of token
   // NONE = -1, EOF_T, NUM_TOKENS
 
@@ -159,69 +167,76 @@ token_type LexicalAnalyzer::GetToken ()
 int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, char a)
 {
   switch(state_found)
-    {
-      //enum end_states = {end_IDKEY_T = 1 ,end_NUMLIT_T, end_LISTOP_T, end_LT_T, end_GT_T, end_MINUS_T, end_PLUS_T, LTE_T, GTE_T, DIV_T, MULT_T, EQUALTO_T, LPAREN_T, RPAREN_T, QUOTE_T, IDKEY_T, error};
-      // 1
+  {
+    //enum end_states = {end_IDKEY_T = 1 ,end_NUMLIT_T, end_LISTOP_T, end_LT_T, end_GT_T, end_MINUS_T, end_PLUS_T, LTE_T, GTE_T, DIV_T, MULT_T, EQUALTO_T, LPAREN_T, RPAREN_T, QUOTE_T, IDKEY_T, error};
+    // 1
     case end_IDKEY_T:
       // collect lexeme
       cout  << "lexeme "<< lexeme << endl;
-      token = NUM_TOKENS;
+      token = IDENT;
+      GetTokenName(token);
       setEOF();
       i--;
 
       return i;
     
-      // 2
+    // 2
     case end_NUMLIT_T:
       // collect lexeme
       cout << "lexeme " << lexeme << endl;
       token = NUM_TOKENS;
+      GetTokenName(token);
       setEOF();
       i--;
 
       return i;
     
-      // 3
+    // 3
     case end_LISTOP_T:
       // collect lexeme
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = LISTOP;
+      GetTokenName(token);
       setEOF();
       i--;
 
       return i;      
-      // 4
+    // 4
     case end_LT_T:
       // collect lexeme
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = LT;
+      GetTokenName(token);
       setEOF();
       i--;
 
       return i;
-      // 5
+    // 5
     case end_GT_T:
       // collect lexeme
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = GT;
+      GetTokenName(token);
       setEOF();
       i--;
 
       return i;
-      // 6
+    // 6
     case end_MINUS_T:
       // collect lexeme
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = MINUS;
+      GetTokenName(token);
       setEOF();
       i--;
 
       return i;
-      // 7
+    // 7
     case end_PLUS_T:
       // collect lexeme
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = PLUS;
+      GetTokenName(token);
       setEOF();
       i--;
 
@@ -232,155 +247,168 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       // if match fails then token is -16
       // collect lexeme
 
-      // 16 
+    // 16 
     case LTE_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = LTE;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // 17
+    // 17
     case GTE_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = GTE;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // 18
+    // 18
     case DIV_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = DIV;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // 19
+    // 19
     case MULT_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = MULT;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // 20
+    // 20
     case EQUALTO_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = EQUALTO;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // 21
+    // 21
     case LPAREN_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = LPAREN;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // 22
+    // 22
     case RPAREN_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = RPAREN;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // 23
+    // 23
     case QUOTE_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
-      token = NUM_TOKENS;
+      token = QUOTE;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // 24
+    // 24
     case IDKEY_T:
       // add a to lexeme
       lexeme += a;
       cout << "lexeme " << lexeme << endl;
       token = NUM_TOKENS;
+      GetTokenName(token);
       setEOF();
 
       // return lexeme
       return i;
 
-      // can't tell the difference between a valid ending char for the state and an actual error
-      // 25
+    // can't tell the difference between a valid ending char for the state and an actual error
+    // 25
     case error:
 
       // cases 1 and 2 must be separate
       // have each casse return separately
       // a space should not be an error
       if(a == ' ')
-	{
-	  //cout << "|" << a << "| is not an error" << endl;
-	  // empty lexemes are being recognized
-	  if(lexeme.size() > 0) cout << "lexeme " << lexeme << endl;
+      {
+        //cout << "|" << a << "| is not an error" << endl;
+        // empty lexemes are being recognized
+        if(lexeme.size() > 0) cout << "lexeme " << lexeme << endl;
+        GetTokenName(NONE);
 
-	  setEOF();
-	  //i++;
-	  return i;
-	}
+        setEOF();
+        //i++;
+        return i;
+      }
       // if lexeme is empty
       if(lexeme.size() == 0)
-	{
-	  cout << "error " << a << endl;
-	  token = NONE;
-	  setEOF();
-	}
-      // actual error
+      {
+              cout << "error " << a << endl;
+              token = NONE;
+              GetTokenName(token);
+              setEOF();
+      }
+        // actual error
       // if lexeme ends in ? and idkey case has been ignored
       else if(a == '?')
-	{
-	  cout << "error " << a << endl;
-	  token = NONE;
-	  setEOF();
-	  // error
-	}
+      {
+              cout << "error " << a << endl;
+              token = NONE;
+              GetTokenName(token);
+              setEOF();
+        // error
+      }
       else
-	{
-	  // end state
-	  // collect and leave
-	  // i--
-	  cout << "lexeme " << lexeme << endl;
+      {
+        // end state
+        // collect and leave
+        // i--
+        cout << "lexeme " << lexeme << endl;
 
-	  lexeme += a;
-	  token = NONE;
-	  setEOF();
-	  // print -17
+        lexeme += a;
+        token = NONE;
+        GetTokenName(token);
+        setEOF();
+        // print -17
 
-	  i--;
-	}
+        i--;
+      }
       return i;
 
-    }
+  }
 }
 
 //example of token is LISTOP_T
@@ -390,93 +418,49 @@ string LexicalAnalyzer::GetTokenName (token_type t) const
   // The GetTokenName function returns a string containing the name of the
   // token passed to it.
   
-
-  // non if lexeme is invalid
-  // eof_t if hit end of file and EOF_T token was found
-  // numtokens if a valid lexeme was found
- 
-  //test enum output NONE = -1, EOF_T, NUM_TOKENS
+  // once the enum is in the proper places and all that. 
+//enum token_type {NONE = -1, EOF_T, NUM_TOKENS, IDENT, PLUS,
+// MINUS, DIV, MULT, EQUALTO, GT, LT, GTE, LTE, LPAREN, RPAREN, QUOTE}
 switch(t){
   case NONE:
-       return ""
+       return "";
   case EOF_T:
        return "EOF_T";
   case NUM_TOKENS:
-       return "NUMTOKEN_T";
-  }
-  //end_IDKEY_T = 1 ,end_NUMLIT_T, end_LISTOP_T, end_LT_T, end_GT_T, end_MINUS_T, end_PLUS_T, LTE_T, GTE_T,
-  // DIV_T, MULT_T, EQUALTO_T, LPAREN_T, RPAREN_T, QUOTE_T, IDKEY_T, error
-// once the enum is in the proper places and all that. 
-switch(t){
-  case IDKEY:
-       return idenCheck();
-  case NUMLIT:
        return "NUMLIT_T";
+  case IDENT:
+       return idenCheck();
   case LISTOP:
        return "LISTOP_T";
-  case LT:
-       return "LT_T";
-  case LTE:
-       return "LTE_T";
-  case GT:
-       return "GT_T";
-  case GTE:
-       return "GTE_T";
+  case PLUS:
+       return "PLUS_T";  
   case MINUS:
        return "MINUS_T";
-  case PLUS:
-       return "PLUS_T";
   case DIV:
        return "DIV_T";
   case MULT:
        return "MULT_T";
   case EQUALTO:
        return "EQUALTO_T";
+  case LT:
+       return "LT_T";
+  case GT:
+       return "GT_T";
+  case GTE:
+       return "GTE_T";
+  case LTE:
+       return "LTE_T";
   case LPAREN:
        return "LPAREN_T";
   case RPAREN:
        return "RPAREN_T";
   case QUOTE:
        return "QUOTE_T";
-  case ERROR:
-       return "ERROR";
-}
-  /* once the enum is in the proper places and all that. 
-     switch(t){
-     case IDKEY:
-     return "IDKEY_T";
-     case NUMLIT:
-     return "NUMLIT_T";
-     case LISTOP:
-     return "LISTOP_T";
-     case LT:
-     return "LT_T";
-     case LTE:
-     return "LTE_T";
-     case GT:
-     return "GT_T";
-     case GTE:
-     return "GTE_T";
-     case MINUS:
-     return "MINUS_T";
-     case PLUS:
-     return "PLUS_T";
-     case DIV:
-     return "DIV_T";
-     case MULT:
-     return "MULT_T";
-     case EQUALTO:
-     return "EQUALTO_T";
-     case LPAREN:
-     return "LPAREN_T";
-     case RPAREN:
-     return "RPAREN_T";
-     case QUOTE:
-     return "QUOTE_T";
-     case ERROR:
-     return "ERROR";
-     }
-  */
+  case default:
+       return "";
+  }
+  
+
   return "";
 }
 
@@ -494,14 +478,14 @@ void LexicalAnalyzer::ReportError (const string & msg)
 void LexicalAnalyzer::getInput()
 {
 
-  // part of creation of infinite loop
-  getline(input, line);
+    // part of creation of infinite loop
+    getline(input, line);
 
-  pos = 0;
-  state = 0;
-  token = NUM_TOKENS;
-  lexeme = "";
-   
+    pos = 0;
+    state = 0;
+    token = NUM_TOKENS;
+    lexeme = "";
+    //cout << line;
 }
 string LexicalAnalyzer::getLine()
 {
@@ -519,9 +503,9 @@ int LexicalAnalyzer::getPos()
 }
 void LexicalAnalyzer::setEOF()
 {
-  // if input got last line
-g   if(input.eof())
-    token = EOF_T;
+    // if input got last line
+    if(input.eof())
+      token = EOF_T;
 }
 string LexicalAnalyzer::GetLexeme(){
        return lexeme;       
