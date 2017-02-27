@@ -253,7 +253,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       return i;
 
-      // 19
+      // 11
     case MULT_T:
       // add a to lexeme
       lexeme += a;
@@ -264,7 +264,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       return i;
 
-      // 20
+      // 12
     case EQUALTO_T:
       // add a to lexeme
       lexeme += a;
@@ -275,7 +275,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       return i;
 
-      // 21
+      // 13
     case LPAREN_T:
       // add a to lexeme
       lexeme += a;
@@ -286,7 +286,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       return i;
 
-      // 22
+      // 14
     case RPAREN_T:
       // add a to lexeme
       lexeme += a;
@@ -297,7 +297,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       return i;
 
-      // 23
+      // 15
     case QUOTE_T:
       // add a to lexeme
       lexeme += a;
@@ -309,7 +309,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       return i;
 
-      // 24
+      // 16
     case IDKEY_T:
       // add a to lexeme
       lexeme += a;
@@ -324,7 +324,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       setEOF();
       return i;
 
-      // 25
+      // 17
     case error:
 
       // these are states that require peaking to detect end
