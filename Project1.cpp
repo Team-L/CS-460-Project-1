@@ -15,14 +15,7 @@ int main (int argc, char * argv[])
     	SetLimits ();
 
 	SyntacticalAnalyzer parser (argv[1]);
-	/*
-	works on test_individuals for the following part
-	car
 
-	cadr
-	caddr
-	*/
-	//parser->()
 
 
 	return 0;

@@ -9,24 +9,38 @@ SyntacticalAnalyzer::SyntacticalAnalyzer (char * filename)
 {
   
   lex = new LexicalAnalyzer (filename);
+
 	token_type t;
 	// read 1 line in at a time as a string
+	lex->fileName(string(filename) );
 	do
 	  {
 	    // read in line
 	    lex->getInput();
-	    cout << "new line\n";
 	    // index should be using pos
 	    if(lex->getStream().eof()) t = EOF_T;
+	    // print line, line_number
+
 	    while(lex->getPos() < lex->getLine().size())
-	      
-	      // get all lexemes
+		{
+	      // get part of lexeme
 	      t = lex->GetToken();
-	    
-	  } while(t != EOF_T/*!(lex->getStream().eof())*/); //eof has not been set
+	  		// retrieve the lexeme
+	  		// string token_name = retrieve the tokenName(t)
+	      // how to know when the end of the lexeme is found
+
+		}
+
+
+	  	// print tokens, lexemes
+		lex->incrementLineNumber();
+
+	  } while(t != EOF_T); //eof has not been set
+
+	// output 
+	lex->closeFile();
 	
-	
-	
+	//delete lex;
 }
 
 SyntacticalAnalyzer::~SyntacticalAnalyzer ()
