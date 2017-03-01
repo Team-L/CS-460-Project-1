@@ -100,6 +100,7 @@ token_type LexicalAnalyzer::GetToken ()
   // creates 1 lexeme
   a = line[pos];
   int j = index(a);
+  
   // We have hit an error state
   if(table[state][j] < 0)
     {
