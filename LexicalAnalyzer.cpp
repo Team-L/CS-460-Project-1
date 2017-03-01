@@ -586,13 +586,14 @@ string LexicalAnalyzer::idenCheck(string lexeme1) const
        if(lexeme1.length() == 3)
        {
 
-            if(lexeme1 == "cons")
-                    return "CONS_T";
+
             if(lexeme1 == "and")
                     return "AND_T";
             if(lexeme1 == "not")
                     return "NOT_T";
        }
+       if(lexeme1 == "cons")
+            return "CONS_T";
        if(lexeme1 == "while")
             return "WHILE_T";
        if(lexeme1 == "define")
