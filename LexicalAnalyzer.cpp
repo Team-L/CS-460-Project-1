@@ -503,6 +503,8 @@ void LexicalAnalyzer::getInput()
 {
   // part of creation of infinite loop
   getline(input, line);
+  
+  line = line + " ";
   pos = 0;
   state = 0;
   token = NUM_TOKENS;
