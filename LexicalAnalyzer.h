@@ -61,7 +61,7 @@ class LexicalAnalyzer
 	int detectEndOfLexeme(int state_found, int i, string lexeme, char a, int previous_state);
 	string GetTokenName (token_type t) const;
 	string GetLexeme () const;
-	void ReportError (const string & msg);
+	void ReportError ();
 	void getInput();
 	string getLine();
 	ifstream& getStream();
@@ -76,6 +76,7 @@ class LexicalAnalyzer
     private:
 	int previous_state;
 	ifstream input;
+	ofstream p1;
 	ofstream listing;
 	ofstream debug;
 	token_type token;

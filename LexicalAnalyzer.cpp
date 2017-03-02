@@ -1,7 +1,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <algorithm>
-
+#include<fstream>
 #include "LexicalAnalyzer.h"
 
 using namespace std;
@@ -42,9 +42,13 @@ LexicalAnalyzer::LexicalAnalyzer (char * filename)
   line_number = 1;
   // initalize lexemes to size 0
   lexemes.resize(0);
-
+  
+  listing.open("1.lst");
+  p1.open("1.dbg");
+  
   token = NUM_TOKENS;
   string file_name = "";
+  
   for(int i = 0; filename[i] != '.'; i++)
 
     file_name += filename[i];
@@ -152,7 +156,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       lexemes.push_back(lexeme);
 
       token = IDENT;
-
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       lexemes.resize(0);
 
@@ -165,6 +169,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       // collect lexeme
 
       token = NUM_TOKENS;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -176,6 +181,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       // collect lexeme
 
       token = LISTOP;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -186,6 +192,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
     case end_LT_T:
       // collect lexeme
       token = LT;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -196,6 +203,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
     case end_GT_T:
       // collect lexeme
       token = GT;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -206,6 +214,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
     case end_MINUS_T:
       // collect lexeme
       token = MINUS;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -216,6 +225,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
     case end_PLUS_T:
       // collect lexeme
       token = PLUS;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       setEOF();
       i--;
@@ -227,6 +237,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       lexeme += a;
 
       token = LTE;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -237,6 +248,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       // add a to lexeme
       lexeme += a;
       token = GTE;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -248,6 +260,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       lexeme += a;
 
       token = DIV;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -259,6 +272,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       lexeme += a;
 
       token = MULT;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -270,6 +284,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       lexeme += a;
 
       token = EQUALTO;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -281,6 +296,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       lexeme += a;
 
       token = LPAREN;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -292,6 +308,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       lexeme += a;
 
       token = RPAREN;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
       setEOF();
@@ -303,6 +320,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       lexeme += a;
 
       token = QUOTE;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
 
@@ -317,6 +335,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
 
       lexemes.push_back(lexeme);
       token = IDENT;
+      p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
       lexemes.resize(0);
 
@@ -334,26 +353,24 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
         {
 
           if(previous_state == 11)
-            token = LISTOP;
+	    {
+	      token = LISTOP;
+	    }
           else if(previous_state == 1)
           {
-
-
             token = IDENT;
             lexemes.push_back(lexeme);
-          }
+	  }
           else if(previous_state == 5)
           {
-
             token = IDENT;
             lexemes.push_back(lexeme);
-          }
+	  }
           else if(previous_state == 2)
           {
-
             token = IDENT;
             lexemes.push_back(lexeme);
-          }
+	  }
           else if(previous_state == 3)
             token = MINUS;
           // NUM_TOKENS == NUMLIT
@@ -364,15 +381,18 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
           else if(previous_state == 7)
             token = NUM_TOKENS;
           else if(previous_state == 9)
-           token =  NUM_TOKENS;
+	    token =  NUM_TOKENS;
           else if(previous_state == 12)
-           token =  GT;
+	    token =  GT;
           else if(previous_state == 13)
-           token =  LT;
+	    token =  LT;
 
-         debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
-         lexemes.resize(0);
+	 
+	  p1 << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
+	  debug << left << setw(15) << GetTokenName(token) << setw(10) << lexeme << endl;
 
+	  lexemes.resize(0);
+	  
         }
         i--;
 
@@ -400,24 +420,28 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
         lexeme += a;
 
         // save line number, col number and error lexeme
-        debug << left << setw(15) << "ERROR_T" << lexeme << endl;
+	p1 <<"error on line " << line_number << ":  " << line << " The invalid character found is: " << lexeme << endl;
+	listing <<"error on line " << line_number << ":  " << line << " The invalid character found is: " << lexeme << endl;
+	debug << left << setw(15) << "ERROR_T" << lexeme << endl;
 
         token = NONE;
-        errors++;
-        setEOF();
-        return i;
+	setEOF();
+	errors ++;
+	return i;
       }
       // error case
       if(lexeme.size() > 0)
       {
-
+	p1 <<"error on line "<< line_number << ":  " << line << " The invalid character found is: " << lexeme << endl;
+	listing <<"error on line " << line_number << ":  " << line << " The invalid character found is: " << lexeme << endl;
         debug << left << setw(15) << "ERROR_T" << lexeme << endl;
 
         i--;
         token = NONE;
-        errors++;
-        setEOF();
-        return i;
+	setEOF();
+	errors ++;
+	return i;
+	
       }
       // if lexeme ends in ? and idkey case has been ignored
       // error case
@@ -425,15 +449,14 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
       else if(a == '?')
       {
         lexeme += a;
-
+	p1 <<"error on line " << line_number << ":  " << line << " The invalid character found is: " << lexeme << endl;
+	listing <<"error on line " << line_number << ":  " << line << " The invalid character found is: " << lexeme << endl;
         debug << left << setw(15) << "ERROR_T" << lexeme << endl;
 
-
         token = NONE;
-        errors++;
-        setEOF();
-
-        return i;
+	setEOF();
+	errors ++;
+	return i;
       }
       
 
@@ -495,9 +518,10 @@ string LexicalAnalyzer::GetLexeme () const
   return lexeme;
 }
 
-void LexicalAnalyzer::ReportError (const string & msg)
+void LexicalAnalyzer::ReportError ()
 {
   // This function will be called to write an error message to a file
+  errors++;
 }
 void LexicalAnalyzer::getInput()
 {
@@ -529,6 +553,8 @@ void LexicalAnalyzer::setEOF()
    if(input.eof())
    {
       token = EOF_T;
+      p1 << errors <<" errors found in input file";
+      listing << errors << " errors found in input file";
       debug << GetTokenName(token) << endl;
       //tokens.push_back(GetTokenName(token));
     }
@@ -540,8 +566,9 @@ void Print(string a)
 void LexicalAnalyzer::fileName(string source_file_name)
 {
   //print file name to dbg
-
-    debug << "Input file: " << source_file_name << endl;
+  p1 << "Input file: " << source_file_name << endl;
+  listing << "Input file: " << source_file_name << endl;
+  debug << "Input file: " << source_file_name << endl;
 
 }
 void LexicalAnalyzer::dbgFile(string line)
@@ -556,6 +583,8 @@ void LexicalAnalyzer::dbgFile(string line)
 void LexicalAnalyzer::closeFile()
 {
   debug.close();
+  listing.close();
+  p1.close();
 }
 string LexicalAnalyzer::idenCheck(string lexeme1) const
 {
