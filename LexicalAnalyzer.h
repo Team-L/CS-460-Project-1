@@ -10,7 +10,7 @@
 using namespace std;
 
 enum token_type {NONE = -1, EOF_T, NUM_TOKENS, IDENT, IDKEY, NUMLIT, LISTOP, LT, GT, MINUS, PLUS, LTE, GTE, DIV, MULT, EQUALTO, LPAREN, RPAREN, QUOTE};
-enum end_states {end_IDKEY_T = 1 ,end_NUMLIT_T, end_LISTOP_T, end_LT_T, end_GT_T, end_MINUS_T, end_PLUS_T, LTE_T, GTE_T, DIV_T, MULT_T, EQUALTO_T, LPAREN_T, RPAREN_T, QUOTE_T, IDKEY_T, error};
+enum end_states {end_IDKEY_T = 1 ,end_NUMLIT_T, end_LISTOP_T, end_GT_T, end_LT_T, end_MINUS_T, end_PLUS_T, GTE_T, LTE_T, DIV_T, MULT_T, EQUALTO_T, LPAREN_T, RPAREN_T, QUOTE_T, IDKEY_T, error};
 
 class ErrorToken
 {
@@ -78,8 +78,10 @@ class LexicalAnalyzer
 	ifstream input;
 	ofstream listing;
 	ofstream debug;
+	ofstream p1;
 	token_type token;
 	string line;
+	string line_for_output;
 	int line_number;
 	int pos;
 	string lexeme;
