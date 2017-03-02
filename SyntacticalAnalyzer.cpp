@@ -25,8 +25,12 @@ SyntacticalAnalyzer::SyntacticalAnalyzer (char * filename)
 		{
 	      // get part of lexeme
 	      t = lex->GetToken();
-	  		// retrieve the lexeme
-	  		// string token_name = retrieve the tokenName(t)
+	      if(t == lex->GetToken)
+		{
+		  lex->ReportError();
+		}
+	      // retrieve the lexeme
+	      // string token_name = retrieve the tokenName(t)
 	      // how to know when the end of the lexeme is found
 
 		}
