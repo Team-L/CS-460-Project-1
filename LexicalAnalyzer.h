@@ -79,7 +79,6 @@ class LexicalAnalyzer
 	ofstream p1;
 	ofstream listing;
 	ofstream debug;
-	ofstream p1;
 	token_type token;
 	string line;
 	string line_for_output;

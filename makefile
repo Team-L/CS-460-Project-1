@@ -26,8 +26,8 @@ run_L_ss:
 run_test_individuals:
 	./P1.out test_individuals.txt
 run_all_tests:
-	./P1.out TeamL.ss
-	cat test.dbg
+	./P1.out L.ss
+	cat L.dbg
 	./P1.out test1.ss
 	cat test.dbg
 	./P1.out test2.ss
@@ -46,8 +46,20 @@ run_all_tests:
 	cat test.dbg
 run_test_9:
 	./P1.out test9.ss
-	cat test.dbg
-
+	#cat test9.p1
+	cat test9.dbg
+	cat test9.lst
+	#diff test9.p1 ../P1Tests/test9.p1
+	#diff test9.dbg ../P1Tests/test9.dbg
+	diff test9.lst ../P1Tests/test9.lst
+run_test_8:
+	./P1.out test8.ss
+	cat test8.p1
+	cat test8.dbg
+	cat test8.lst
+	#diff test8.p1 ../P1Tests/test8.p1
+	diff test8.dbg ../P1Tests/test8.dbg
+	diff test8.lst ../P1Tests/test8.lst
 submit : Project1.cpp LexicalAnalyzer.h LexicalAnalyzer.cpp SyntacticalAnalyzer.h SyntacticalAnalyzer.cpp makefile README.txt
 	rm -rf TeamLP1
 	mkdir TeamLP1

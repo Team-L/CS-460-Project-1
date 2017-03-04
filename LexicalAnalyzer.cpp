@@ -43,8 +43,8 @@ LexicalAnalyzer::LexicalAnalyzer (char * filename)
   // initalize lexemes to size 0
   lexemes.resize(0);
   
-  listing.open("1.lst");
-  p1.open("1.dbg");
+  //listing.open("1.lst");
+  //p1.open("1.dbg");
   
   token = NUM_TOKENS;
   string file_name = "";
@@ -53,11 +53,17 @@ LexicalAnalyzer::LexicalAnalyzer (char * filename)
 
     file_name += filename[i];
   string debug_file_name = file_name;
-  file_name += ".p1";
-  p1.open(file_name.c_str());
+  string listing_file_name = filename;
+  string p1_file_name = file_name;
+
+  p1_file_name += ".p1";
+  p1.open(p1_file_name.c_str());
 
   debug_file_name += ".dbg";
   debug.open(debug_file_name.c_str());
+
+  listing_file_name += ".lst";
+  listing.open(listing_file_name.c_str());
 }
 
 LexicalAnalyzer::~LexicalAnalyzer ()
@@ -425,7 +431,7 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
          debug << "\t" << left << setw(16) << GetTokenName(token) << lexeme << endl;
 
 
-	  lexemes.resize(0);
+    	  lexemes.resize(0);
 	  
         }
         i--;
@@ -456,12 +462,14 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
 
         p1 << "\t" << left << setw(16)  << "ERROR_T" << lexeme << endl;
         debug << "Error at " << line_number << "," << i + 1 << ": Invalid character found: " << lexeme << endl;
+        listing << "Error at " << line_number << "," << i + 1 << ": Invalid character found: " << lexeme << endl;
+
         debug << "\t" << left << setw(16)  << "ERROR_T" << lexeme << endl;
 
         token = NONE;
-	setEOF();
-	errors ++;
-	return i;
+      	setEOF();
+      	errors ++;
+      	return i;
       }
       // error case
       if(lexeme.size() > 0)
@@ -473,12 +481,14 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
 
         // i is getting docked so i(this case) = i + 1(other 2 error cases)
         debug << "Error at " << line_number << "," << i << ": Invalid character found: " << lexeme << endl;
+        listing << "Error at " << line_number << "," << i << ": Invalid character found: " << lexeme << endl;
+
         debug << "\t" << left << setw(16)  << "ERROR_T" << lexeme << endl;
         i--;
         token = NONE;
-	setEOF();
-	errors ++;
-	return i;
+      	setEOF();
+      	errors ++;
+      	return i;
 	
       }
       // if lexeme ends in ? and idkey case has been ignored
@@ -493,13 +503,15 @@ int LexicalAnalyzer::detectEndOfLexeme(int state_found, int i, string lexeme, ch
 
         // line number, position
         debug << "Error at " << line_number << "," << i + 1 << ": Invalid character found: " << lexeme << endl;
+        listing << "Error at " << line_number << "," << i + 1 << ": Invalid character found: " << lexeme << endl;
+
         debug << "\t" << left << setw(16)  << "ERROR_T" << lexeme << endl;
 
 
         token = NONE;
-	setEOF();
-	errors ++;
-	return i;
+      	setEOF();
+      	errors ++;
+      	return i;
       }
       
 
@@ -568,7 +580,7 @@ void LexicalAnalyzer::ReportError ()
 }
 void LexicalAnalyzer::getInput()
 {
-  // part of creation of infinite loop
+
   getline(input, line);
   
   line_for_output = line;
@@ -598,11 +610,6 @@ void LexicalAnalyzer::setEOF()
    {
       token = EOF_T;
 
-      p1 << errors <<" errors found in input file";
-      listing << errors << " errors found in input file";
-      debug << GetTokenName(token) << endl;
-
-      //tokens.push_back(GetTokenName(token));
     }
 }
 void Print(string a)
@@ -611,14 +618,11 @@ void Print(string a)
 }
 void LexicalAnalyzer::fileName(string source_file_name)
 {
-  //print file name to dbg
 
-    // .p1
-    p1 << "Input file: " << source_file_name << endl;
     // .dbg
     debug << "Input file: " << source_file_name << endl;
-
-  listing << "Input file: " << source_file_name << endl;
+    // .lst
+    listing << "Input file: " << source_file_name << endl;
 
 
 }
@@ -627,14 +631,16 @@ void LexicalAnalyzer::dbgFile(string line)
 
   //say what line you are on and print that line.
   debug << "   " << line_number << ": " << line_for_output << endl;
+  listing << "   " << line_number << ": " << line_for_output << endl;
 
   
 }
 
 void LexicalAnalyzer::closeFile()
 {
-  p1.close();
+
   debug << errors << " errors found" << " in input file" << endl;
+
   debug.close();
   listing.close();
   p1.close();
